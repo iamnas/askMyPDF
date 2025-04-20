@@ -1,5 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+import multer from 'multer';
+
+const upload = multer({ dest: 'uploads/' })
+
 
 const app = express()
 app.use(express.json())
@@ -13,7 +17,11 @@ app.get('/',(req,res)=>{
     })
 })
 
-app.post('/upload/pdf')
+app.post('/upload/pdf',upload.single('pdf'),(req,res)=>{
+    return res.json({
+        message:`uploaded successfully`
+    })
+})
 
 app.listen(PORT,()=>{
     console.log(` server is listening on http://localhost:${PORT}`);
